@@ -184,3 +184,8 @@ versions:
 	@echo
 	which $(CLANG-FORMAT)
 	$(CLANG-FORMAT) --version
+
+UVaCollatz.c++: Collatz.h Collatz.c++ RunCollatz.c++
+	cat Collatz.h Collatz.c++ RunCollatz.c++ \
+	| sed -n "/^#include \"Collatz\\.h\"$\/!p" \
+	> UVaCollatz.c++

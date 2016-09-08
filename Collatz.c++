@@ -28,10 +28,46 @@ bool collatz_read (istream& r, int& i, int& j) {
 // ------------
 // collatz_eval
 // ------------
+int lazy_cache[3000000] = {0};
 
 int collatz_eval (int i, int j) {
-    // <your code>
-    return 1;}
+   int max = 0;
+
+   if(j < i) {
+     int t;
+     t = i;
+     i = j;
+     j = t;
+   }
+
+   for(int k = i; k <= j; ++k) {
+
+     int temp = k;
+     int count = 1;
+
+     while(temp != 1){
+      if(temp <= 3000000) {
+        if(lazy_cache[temp] != 0){
+          count = lazy_cache[temp];
+          break;
+        }
+      }
+      if(temp % 2 == 0)
+        temp /= 2;
+      else {
+        temp = ((temp*3) + 1)/2;
+        ++count;
+      }
+      ++count;
+     }
+
+     if(temp == 1)
+      lazy_cache[temp] = count;
+     if(count > max)
+       max = count;
+   }
+
+    return max;}
 
 // -------------
 // collatz_print
