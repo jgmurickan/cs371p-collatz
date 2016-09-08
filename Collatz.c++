@@ -28,7 +28,11 @@ bool collatz_read (istream& r, int& i, int& j) {
 // ------------
 // collatz_eval
 // ------------
-int lazy_cache[3000000] = {0};
+#define ENABLE_OPTIMIZATION
+
+#ifdef ENABLE_OPTIMIZATION
+int lazy_cache[1000000] = {0};
+#endif
 
 int collatz_eval (int i, int j) {
    int max = 0;
@@ -46,23 +50,32 @@ int collatz_eval (int i, int j) {
      int count = 1;
 
      while(temp != 1){
-      if(temp <= 3000000) {
-        if(lazy_cache[temp] != 0){
-          count = lazy_cache[temp];
-          break;
+
+      #ifdef ENABLE_OPTIMIZATION
+        if(temp <= 1000000) {
+          if(lazy_cache[temp] != 0){
+            count = lazy_cache[temp];
+            break;
+          }
         }
-      }
+      #endif
+
       if(temp % 2 == 0)
         temp /= 2;
       else {
-        temp = ((temp*3) + 1)/2;
-        ++count;
+        #ifdef ENABLE_OPTIMIZATION
+          temp = ((temp*3) + 1)/2;
+          ++count;
+        #else
+          temp = temp*3 + 1;
+        #endif
       }
       ++count;
      }
-
-     if(temp == 1)
-      lazy_cache[temp] = count;
+      #ifdef ENABLE_OPTIMIZATION
+       if(temp == 1)
+        lazy_cache[temp] = count;
+      #endif
      if(count > max)
        max = count;
    }
