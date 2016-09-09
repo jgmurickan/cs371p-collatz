@@ -30,6 +30,7 @@ bool collatz_read (istream& r, int& i, int& j) {
 // ------------
 #define ENABLE_OPTIMIZATION
 
+//really lazy cache optimization, just fills in cycle lengths when it finds it
 #ifdef ENABLE_OPTIMIZATION
 int lazy_cache[1000000] = {0};
 #endif
@@ -37,6 +38,7 @@ int lazy_cache[1000000] = {0};
 int collatz_eval (int i, int j) {
    int max = 0;
 
+   //switches i and j if i is greater than j 
    if(j < i) {
      int t;
      t = i;
@@ -44,14 +46,17 @@ int collatz_eval (int i, int j) {
      j = t;
    }
 
+   //loops through the range
    for(int k = i; k <= j; ++k) {
 
      int temp = k;
      int count = 1;
 
+     //finds the cycle length
      while(temp != 1){
 
       #ifdef ENABLE_OPTIMIZATION
+        //lazy cache that just checks if it's in the cache in the beginning
         if(temp <= 1000000) {
           if(lazy_cache[temp] != 0){
             count = lazy_cache[temp];
@@ -60,10 +65,13 @@ int collatz_eval (int i, int j) {
         }
       #endif
 
+      //if even
       if(temp % 2 == 0)
         temp /= 2;
+      //if odd
       else {
         #ifdef ENABLE_OPTIMIZATION
+          //two steps in one if odd number
           temp = ((temp*3) + 1)/2;
           ++count;
         #else
@@ -73,6 +81,7 @@ int collatz_eval (int i, int j) {
       ++count;
      }
       #ifdef ENABLE_OPTIMIZATION
+       //if not in lazy cache, add it
        if(temp == 1)
         lazy_cache[temp] = count;
       #endif
