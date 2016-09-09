@@ -71,7 +71,7 @@ int collatz_eval (int i, int j) {
       //if odd
       else {
         #ifdef ENABLE_OPTIMIZATION
-          //two steps in one if odd number
+          //two steps in one if odd number optimization, not cache related
           temp = ((temp*3) + 1)/2;
           ++count;
         #else
