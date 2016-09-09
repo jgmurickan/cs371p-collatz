@@ -1,3 +1,15 @@
+commit 170168f2a9181625502035c439185df5ca4c294b
+Author: Jobin Murickan <jobin.murickan@gmail.com>
+Date:   Thu Sep 8 19:44:53 2016 -0500
+
+    added comments
+
+commit 0e7fcf801212f0acceb3c1e43e9abba8324c8655
+Author: Jobin Murickan <jobin.murickan@gmail.com>
+Date:   Thu Sep 8 19:26:18 2016 -0500
+
+    updating collatz.log
+
 commit cafcbe8b37b97cec4e649633846afe4222460afb
 Author: Jobin Murickan <jobin.murickan@gmail.com>
 Date:   Thu Sep 8 19:24:43 2016 -0500
